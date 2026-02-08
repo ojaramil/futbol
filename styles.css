@@ -1064,6 +1064,21 @@ h4,
         justify-content: center;
     }
 
+    /* Better button on mobile */
+    .btn-broadcast {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     .p-info {
         max-width: 150px;
         /* Prevent text overflow */
