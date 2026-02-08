@@ -1087,3 +1087,156 @@ h4,
         text-overflow: ellipsis;
     }
 }
+
+/* Match Center - Results & Schedule */
+.match-section {
+    background: var(--navy-dark);
+    color: white;
+    padding: 60px 0;
+    border-bottom: 2px solid var(--sky-blue);
+}
+
+.match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    align-items: start;
+}
+
+.match-col h3 {
+    color: var(--sky-blue);
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.score-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.score-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.match-teams {
+    font-weight: 500;
+}
+
+.match-score {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--sky-blue);
+    font-size: 1.1rem;
+}
+
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.schedule-match {
+    font-weight: 500;
+    color: var(--white);
+}
+
+.schedule-time {
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--silver);
+}
+
+.schedule-time span {
+    display: block;
+    color: var(--sky-blue);
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .match-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Timezone Updates */
+.timezone-legend {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: var(--silver);
+}
+
+.timezone-legend span {
+    color: var(--sky-blue);
+    font-weight: 700;
+}
+
+.schedule-time-group {
+    text-align: right;
+}
+
+.date-badge {
+    display: block;
+    color: var(--sky-blue);
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+}
+
+.time-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.time-list span {
+    font-size: 0.75rem;
+    color: var(--silver);
+    font-family: var(--font-body);
+}
+
+.hispano-zones {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.hispano-zones p {
+    font-size: 0.9rem;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.zone-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.zone-grid span {
+    background: rgba(77, 166, 255, 0.1);
+    color: var(--sky-blue);
+    padding: 5px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
