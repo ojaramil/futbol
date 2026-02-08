@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hablando de Fútbol | Gómez y López</title>
+    <!-- Fonts matching the logo style: Oswald (Condensed/Bold) + Roboto (Clean Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Broadcast Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">🔴 EN VIVO: REAL MADRID VENCE 2-1 A RAYO VALLECANO</div>
+            <div class="ticker-item">🏆 COPA DEL REY: BARCELONA VS ALBACETE EN CUARTOS</div>
+            <div class="ticker-item">⚽ PREMIER LEAGUE: MANCHESTER UNITED VS TOTTENHAM ESTE SÁBADO</div>
+            <div class="ticker-item">🎙️ NUEVO EPISODIO: ANÁLISIS JORNADA 24</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="brand">
+                <img src="logo-hdf-3.png" alt="Hablando de Fútbol Logo" class="nav-logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#ultimos">Últimos Programas</a></li>
+                <li><a href="#noticias">Noticias</a></li>
+                <li><a href="#hosts">La Dupla</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#suscribirse" class="btn-broadcast">
+                    <i class="fas fa-satellite-dish"></i> Suscríbete
+                </a>
+                <div class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / Studio Section -->
+    <header id="inicio" class="hero-studio">
+        <!-- Background Elements -->
+        <div class="studio-lights"></div>
+        <div class="bg-rings"></div>
+
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="broadcast-tag">SEÑAL EN VIVO</span>
+                <h1>HABLANDO <span class="outline-text">DE FÚTBOL</span></h1>
+                <h2 class="sub-headline">CON GÓMEZ Y LÓPEZ</h2>
+                <p class="hero-desc">
+                    Tu conexión directa con las grandes ligas. Análisis táctico, debate sin filtros y la mejor cobertura
+                    de Europa y España.
+                </p>
+                <div class="cta-group">
+                    <a href="#" class="btn-primary-solid">
+                        <i class="fas fa-play"></i> Ver Último Episodio
+                    </a>
+                    <a href="#" class="btn-outline-light" id="hero-listen-btn">
+                        <i class="fas fa-podcast"></i> Señal en Vivo
+                    </a>
+                </div>
+                <p class="live-signal-note"><i class="fas fa-info-circle"></i> Escuchas la programación general de
+                    Signal Radio.</p>
+
+                <div class="signal-radio-wrapper">
+                    <p class="signal-text">TRANSMITIDO POR:</p>
+                    <img src="logo-4-5.png" alt="Signal Radio" title="Una iniciativa de Asperger para Asperger"
+                        class="signal-logo">
+                </div>
+            </div>
+            <div class="hero-graphic">
+                <!-- Abstract visual representing the logo's mic/ball elements -->
+                <div class="mic-graphic">
+                    <i class="fas fa-microphone-alt"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Grid -->
+    <section id="ultimos" class="section-gray">
+        <div class="container">
+            <div class="section-title">
+                <i class="fas fa-video"></i>
+                <h2>PROGRAMAS RECIENTES</h2>
+            </div>
+
+            <div class="grid-3">
+                <!-- Ep 1 -->
+                <article class="episode-card">
+                    <div class="card-thumb thumb-blue">
+                        <span class="duration">48:15</span>
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-pill">LA LIGA</span>
+                        <h3>Real Madrid 2-1 Rayo: Mbappé y Vini Decisivos</h3>
+                        <p class="date">Publicado hace 2 días</p>
+                    </div>
+                </article>
+
+                <!-- Ep 2 -->
+                <article class="episode-card">
+                    <div class="card-thumb thumb-navy">
+                        <span class="duration">35:20</span>
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-pill">COPA DEL REY</span>
+                        <h3>Previa Cuartos: ¿Podrá el Albacete con el Barça?</h3>
+                        <p class="date">Publicado hace 3 días</p>
+                    </div>
+                </article>
+
+                <!-- Ep 3 -->
+                <article class="episode-card">
+                    <div class="card-thumb thumb-silver">
+                        <span class="duration">41:10</span>
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-pill">PREMIER</span>
+                        <h3>Man. United vs Tottenham: Duelo en la Cumbre</h3>
+                        <p class="date">Publicado hace 1 día</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hosts Banner -->
+    <section id="hosts" class="hosts-strip">
+        <div class="container">
+            <div class="hosts-layout">
+                <div class="host-profile">
+                    <div class="avatar-ring">
+                        <span class="initial">G</span>
+                    </div>
+                    <div class="host-details">
+                        <h3>GÓMEZ</h3>
+                        <p>Analista Táctico</p>
+                    </div>
+                </div>
+
+                <div class="divider-slash"></div>
+
+                <div class="host-profile">
+                    <div class="host-details right-align">
+                        <h3>LÓPEZ</h3>
+                        <p>Narrador Principal</p>
+                    </div>
+                    <div class="avatar-ring">
+                        <span class="initial">L</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Config -->
+    <section id="noticias" class="section-light">
+        <div class="container">
+            <div class="section-title dark-mode">
+                <i class="fas fa-newspaper"></i>
+                <h2>TITULARES DE LA SEMANA</h2>
+            </div>
+            <div class="news-list">
+                <a href="#" class="news-item">
+                    <span class="news-num">01</span>
+                    <div class="news-content">
+                        <h4>Mallorca Golea 4-1 a Sevilla</h4>
+                        <p>Sorpresa en Son Moix: el conjunto bermellón destroza al Sevilla en una noche histórica.</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </a>
+                <a href="#" class="news-item">
+                    <span class="news-num">02</span>
+                    <div class="news-content">
+                        <h4>Champions: Regresan los Octavos</h4>
+                        <p>Real Madrid vs Benfica y Galatasaray vs Juventus abren la fase de eliminatorias este mes.</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </a>
+                <a href="#" class="news-item">
+                    <span class="news-num">03</span>
+                    <div class="news-content">
+                        <h4>España Campeona de Eurocopa Futsal</h4>
+                        <p>La selección vence 5-3 a Portugal en una final épica con hat-trick de Antonio.</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Credits -->
+    <section class="production-credits">
+        <div class="container studio-credits-container">
+            <h4 class="credits-label">UNA PRODUCCIÓN ORIGINAL DE</h4>
+            <div class="credits-logos">
+                <div class="credit-pair">
+                    <img src="logo-apa.png" alt="Asperger para Asperger" class="credit-logo">
+                    <div class="credit-text">
+                        <span>ASPERGER PARA ASPERGER</span>
+                        <small>Inclusión & Desarrollo</small>
+                    </div>
+                </div>
+                <div class="credit-divider"></div>
+                <div class="credit-pair">
+                    <img src="logo-4-5.png" alt="Signal Radio" class="credit-logo">
+                    <div class="credit-text">
+                        <span>SIGNAL RADIO</span>
+                        <small>La Señal Neurodivergente</small>
+                    </div>
+                </div>
+            </div>
+            <p class="credits-disclaimer">
+                <i class="fas fa-hand-holding-heart highlight"></i> Fomentando la inclusión laboral y visibilizando el
+                talento neurodivergente
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>HDF <span class="highlight">G&L</span></h2>
+                    <p>Contenidos deportivos con pasión y análisis.</p>
+                    <p class="production-tag"
+                        style="font-size:0.8rem; color:#666; margin-top:5px; text-transform:uppercase;">Producido por
+                        Asperger para Asperger</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Contacto</a>
+                    <a href="#">Publicidad</a>
+                    <a href="#">Aviso Legal</a>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-spotify"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2024 Hablando de Fútbol. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Persistent Radio Player -->
+    <div class="fixed-player" id="fixed-player">
+        <div class="container player-wrapper">
+            <div class="player-left">
+                <div class="p-logo-box">
+                    <img src="logo-4-5.png" alt="Signal Radio">
+                </div>
+                <div class="p-info">
+                    <span class="p-label"><i class="fas fa-satellite-dish"></i> SIGNAL RADIO</span>
+                    <span class="p-status">SEÑAL 24/7 · Programación General & Música</span>
+                </div>
+            </div>
+
+            <div class="player-center">
+                <button id="main-play-btn" class="p-play-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+
+            <div class="player-right">
+                <div class="p-volume">
+                    <i class="fas fa-volume-up" id="mute-btn"></i>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.8">
+                </div>
+            </div>
+
+            <audio id="radio-stream" preload="none">
+                <source src="https://signalradio.aspergerparaasperger.org/listen/signal_radio/radio.mp3"
+                    type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
