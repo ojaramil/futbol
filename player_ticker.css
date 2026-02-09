@@ -1,0 +1,51 @@
+/* Ticker Styles for Player */
+.player-ticker-mask {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 300px;
+    position: relative;
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.player-ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-left 25s linear infinite;
+    font-size: 0.8rem;
+    color: var(--silver);
+    text-transform: uppercase;
+}
+
+.player-ticker-track span {
+    display: inline-block;
+    padding-right: 5px;
+}
+
+.ticker-sep {
+    color: var(--sky-blue);
+    padding: 0 10px;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Mobile Adjustments for Player Ticker */
+@media (max-width: 768px) {
+    .player-ticker-mask {
+        width: 180px;
+        /* Smaller width on mobile */
+    }
+
+    .p-label {
+        font-size: 0.8rem;
+        /* Slightly smaller label on mobile to fit */
+    }
+}
