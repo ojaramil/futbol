@@ -803,12 +803,17 @@ h4,
     bottom: -100px;
     left: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    border-top: 1px solid var(--sky-blue);
+    /* Efecto Glassmorphism Dark moderno */
+    background: rgba(12, 20, 35, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid rgba(77, 166, 255, 0.4);
     padding: 15px 0;
     z-index: 2000;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Sombra profunda + Brillo interno superior para efecto 3D sutil */
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .fixed-player.active {
@@ -873,21 +878,44 @@ h4,
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: var(--sky-blue);
-    border: none;
-    color: var(--navy-dark);
+    /* Gradiente vibrante para destacar */
+    background: linear-gradient(135deg, var(--sky-blue), #0066cc);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
     font-size: 1.2rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition);
-    box-shadow: 0 0 15px rgba(77, 166, 255, 0.4);
+    transition: all 0.3s ease;
+    /* Resplandor suave inicial */
+    box-shadow: 0 0 20px rgba(77, 166, 255, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.p-play-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.p-play-btn:hover::after {
+    opacity: 1;
+    left: 100%;
 }
 
 .p-play-btn:hover {
-    transform: translateX(-50%) scale(1.1);
-    background: white;
+    transform: translateX(-50%) scale(1.15);
+    background: linear-gradient(135deg, #0066cc, var(--sky-blue));
+    box-shadow: 0 0 30px rgba(77, 166, 255, 0.7);
 }
 
 /* Override transform for hover due to absolute centering logic */
