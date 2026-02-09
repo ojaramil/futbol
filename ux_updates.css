@@ -11,7 +11,7 @@
 /* Match Tabs Styles */
 .match-tabs {
     display: none;
-    /* Hidden on Desktop by default if you want split view, but user asked for improved mobile. Let's make it the default for mobile. */
+    /* Hidden on Desktop by default */
     justify-content: center;
     gap: 15px;
     margin-bottom: 30px;
@@ -37,10 +37,17 @@
     font-weight: 700;
 }
 
+/* Desktop Layout (Grid) */
 .match-grid-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 60px;
+    /* Increased gap for better separation */
+    max-width: 1000px;
+    /* Limit width */
+    margin: 0 auto;
+    /* Center the grid block */
+    align-items: start;
 }
 
 /* Mobile Tabs Logic */
@@ -48,6 +55,7 @@
     .match-grid-tabs {
         display: block;
         /* Stack or just show one */
+        max-width: 100%;
     }
 
     .match-col {
