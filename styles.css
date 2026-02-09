@@ -800,15 +800,19 @@ h4,
 /* Fixed Player Styles */
 .fixed-player {
     position: fixed;
-    bottom: -100px;
+    bottom: -150px;
     left: 0;
     width: 100%;
-    /* Efecto Glassmorphism Dark moderno */
-    background: rgba(12, 20, 35, 0.85);
+    /* Efecto Glassmorphism Dark moderno v2 - Darker & Safe Area ready */
+    background: rgba(12, 20, 35, 0.95);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-top: 1px solid rgba(77, 166, 255, 0.4);
-    padding: 15px 0;
+
+    /* Padding bottom includes safe area inset for iPhone X+ */
+    padding-top: 15px;
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
+
     z-index: 2000;
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     /* Sombra profunda + Brillo interno superior para efecto 3D sutil */
