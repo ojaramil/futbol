@@ -52,6 +52,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const playIcon = playBtn.querySelector('i');
         let isPlaying = false;
 
+        // Setup Media Session immediately if available
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: 'Signal Radio',
+                artist: 'Primera emisora neuro-amigable y neuro-inclusiva de origen hispano y alcance global',
+                album: 'Hablando de Fútbol',
+                artwork: [
+                    { src: 'https://futbol.signalradio.club/logo2.jpg', sizes: '512x512', type: 'image/jpeg' },
+                    { src: 'https://futbol.signalradio.club/logo2.jpg', sizes: '96x96', type: 'image/jpeg' }
+                ]
+            });
+
+            navigator.mediaSession.setActionHandler('play', function () { togglePlay(); });
+            navigator.mediaSession.setActionHandler('pause', function () { togglePlay(); });
+            navigator.mediaSession.setActionHandler('stop', function () { togglePlay(); });
+        }
+
         function togglePlay() {
             if (isPlaying) {
                 audio.pause();
@@ -60,6 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Optional: pulsating effect removal
                 playBtn.style.animation = 'none';
                 isPlaying = false;
+
+                // Update playback state
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = "paused";
+                }
             } else {
                 audio.play().then(() => {
                     playIcon.classList.remove('fa-play');
@@ -68,20 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     isPlaying = true;
                     playerContainer.classList.add('active');
 
-                    // Media Session Metadata (Lock Screen)
+                    // Update playback state
                     if ('mediaSession' in navigator) {
-                        navigator.mediaSession.metadata = new MediaMetadata({
-                            title: 'Signal Radio',
-                            artist: 'Primera emisora neuro-amigable y neuro-inclusiva de origen hispano y alcance global',
-                            album: 'Hablando de Fútbol',
-                            artwork: [
-                                { src: 'logo2.jpg', sizes: '512x512', type: 'image/jpeg' }
-                            ]
-                        });
-
-                        navigator.mediaSession.setActionHandler('play', function () { togglePlay(); });
-                        navigator.mediaSession.setActionHandler('pause', function () { togglePlay(); });
-                        navigator.mediaSession.setActionHandler('stop', function () { togglePlay(); });
+                        navigator.mediaSession.playbackState = "playing";
                     }
                 }).catch(err => {
                     console.error('Playback error:', err);
