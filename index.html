@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="premiere.css">
     <link rel="stylesheet" href="player_ticker.css">
+    <link rel="stylesheet" href="ux_updates.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Open Graph / SEO -->
@@ -125,147 +126,155 @@
                 </div>
             </div>
             <div class="hero-graphic">
-                <!-- Abstract visual representing the logo's mic/ball elements -->
-                <div class="mic-graphic">
-                    <i class="fas fa-microphone-alt"></i>
-                </div>
+                <img src="hero_mic.png" alt="Micrófono de Estudio" class="hero-mic-img">
             </div>
         </div>
     </header>
 
     <!-- Match Center Section -->
     <section class="match-section">
-        <div class="container match-grid">
-            <!-- Left: Recent Results -->
-            <div class="match-col">
-                <h3><i class="fas fa-futbol"></i> ÚLTIMOS RESULTADOS</h3>
-
-                <div class="score-card">
-                    <span class="match-teams">FC Barcelona vs Mallorca</span>
-                    <span class="match-score">3 - 0</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Man. United vs Tottenham</span>
-                    <span class="match-score">2 - 0</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Newcastle vs Brentford</span>
-                    <span class="match-score">2 - 3</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Genova vs Napoli</span>
-                    <span class="match-score">2 - 3</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Atlético de Madrid vs Betis</span>
-                    <span class="match-score">0 - 1</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Valencia vs Real Madrid</span>
-                    <span class="match-score">0 - 2</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Liverpool vs Manchester City</span>
-                    <span class="match-score">1 - 2</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Juventus vs Lazio</span>
-                    <span class="match-score">2 - 2</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">PSG vs Marsella</span>
-                    <span class="match-score">5 - 0</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Athletic Club vs Levante UD</span>
-                    <span class="match-score">4 - 2</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Bayern Munich vs Hoffenheim</span>
-                    <span class="match-score">5 - 1</span>
-                </div>
-                <div class="score-card">
-                    <span class="match-teams">Sassuolo vs Inter Milán</span>
-                    <span class="match-score">0 - 5</span>
-                </div>
+        <div class="container">
+            <!-- Mobile Tabs Navigation -->
+            <div class="match-tabs">
+                <button class="tab-btn active" data-tab="results">
+                    <i class="fas fa-futbol"></i> RESULTADOS
+                </button>
+                <button class="tab-btn" data-tab="schedule">
+                    <i class="fas fa-calendar-alt"></i> AGENDA
+                </button>
             </div>
 
-            <!-- Right: Schedule -->
-            <div class="match-col">
-                <h3><i class="fas fa-calendar-alt"></i> PRÓXIMOS PARTIDOS</h3>
-
-                <div class="timezone-legend">
-                    <small><i class="fas fa-globe-americas"></i> HORARIOS:</small>
-                    <span>🇲🇽 CDMX</span>
-                    <span>🇨🇴 COL</span>
-                    <span>�🇪 VEN</span>
-                    <span>🇦🇷 ARG</span>
-                    <span>🇪🇸 ESP</span>
-                </div>
-
-                <div class="schedule-item">
-                    <div class="schedule-match">Tottenham vs Newcastle</div>
-                    <div class="schedule-time-group">
-                        <span class="date-badge">10 FEB</span>
-                        <div class="time-list">
-                            <span>🇲🇽 1:30 | 🇨🇴 2:30 | 🇻🇪 3:30 PM</span>
-                            <span>🇦🇷 4:30 PM | 🇪🇸 8:30 PM</span>
-                        </div>
+            <div class="match-grid-tabs">
+                <!-- Content: Recent Results -->
+                <div class="match-col tab-content active" id="results">
+                    <h3 class="desktop-only"><i class="fas fa-futbol"></i> ÚLTIMOS RESULTADOS</h3>
+                    <!-- Results Content -->
+                    <div class="score-card">
+                        <span class="match-teams">FC Barcelona vs Mallorca</span>
+                        <span class="match-score">3 - 0</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Man. United vs Tottenham</span>
+                        <span class="match-score">2 - 0</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Newcastle vs Brentford</span>
+                        <span class="match-score">2 - 3</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Genova vs Napoli</span>
+                        <span class="match-score">2 - 3</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Atlético de Madrid vs Betis</span>
+                        <span class="match-score">0 - 1</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Valencia vs Real Madrid</span>
+                        <span class="match-score">0 - 2</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Liverpool vs Manchester City</span>
+                        <span class="match-score">1 - 2</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Juventus vs Lazio</span>
+                        <span class="match-score">2 - 2</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">PSG vs Marsella</span>
+                        <span class="match-score">5 - 0</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Athletic Club vs Levante UD</span>
+                        <span class="match-score">4 - 2</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Bayern Munich vs Hoffenheim</span>
+                        <span class="match-score">5 - 1</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="match-teams">Sassuolo vs Inter Milán</span>
+                        <span class="match-score">0 - 5</span>
                     </div>
                 </div>
 
-                <div class="schedule-item">
-                    <div class="schedule-match">Napoli vs Como</div>
-                    <div class="schedule-time-group">
-                        <span class="date-badge">10 FEB</span>
-                        <div class="time-list">
-                            <span>🇲🇽 2:00 | 🇨🇴 3:00 | 🇻🇪 4:00 PM</span>
-                            <span>🇦🇷 5:00 PM | 🇪🇸 9:00 PM</span>
+                <!-- Content: Schedule -->
+                <div class="match-col tab-content" id="schedule">
+                    <h3 class="desktop-only"><i class="fas fa-calendar-alt"></i> PRÓXIMOS PARTIDOS</h3>
+
+                    <div class="timezone-legend">
+                        <small><i class="fas fa-globe-americas"></i> HORARIOS:</small>
+                        <span>🇲🇽 CDMX</span>
+                        <span>🇨🇴 COL</span>
+                        <span>��🇪 VEN</span>
+                        <span>🇦🇷 ARG</span>
+                        <span>🇪🇸 ESP</span>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-match">Tottenham vs Newcastle</div>
+                        <div class="schedule-time-group">
+                            <span class="date-badge">10 FEB</span>
+                            <div class="time-list">
+                                <span>🇲🇽 1:30 | 🇨🇴 2:30 | 🇻🇪 3:30 PM</span>
+                                <span>🇦🇷 4:30 PM | 🇪🇸 8:30 PM</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="schedule-item">
-                    <div class="schedule-match">Bayern Munich vs Leipzig</div>
-                    <div class="schedule-time-group">
-                        <span class="date-badge">11 FEB</span>
-                        <div class="time-list">
-                            <span>🇲🇽 1:45 | 🇨🇴 2:45 | 🇻🇪 3:45 PM</span>
-                            <span>🇦🇷 4:45 PM | 🇪🇸 8:45 PM</span>
+                    <div class="schedule-item">
+                        <div class="schedule-match">Napoli vs Como</div>
+                        <div class="schedule-time-group">
+                            <span class="date-badge">10 FEB</span>
+                            <div class="time-list">
+                                <span>🇲🇽 2:00 | 🇨🇴 3:00 | 🇻🇪 4:00 PM</span>
+                                <span>🇦🇷 5:00 PM | 🇪🇸 9:00 PM</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="schedule-item">
-                    <div class="schedule-match">Athletic Club vs Real Sociedad</div>
-                    <div class="schedule-time-group">
-                        <span class="date-badge">11 FEB</span>
-                        <div class="time-list">
-                            <span>🇲🇽 2:00 | 🇨🇴 3:00 | 🇻🇪 4:00 PM</span>
-                            <span>🇦🇷 5:00 PM | 🇪🇸 9:00 PM</span>
+                    <div class="schedule-item">
+                        <div class="schedule-match">Bayern Munich vs Leipzig</div>
+                        <div class="schedule-time-group">
+                            <span class="date-badge">11 FEB</span>
+                            <div class="time-list">
+                                <span>🇲🇽 1:45 | 🇨🇴 2:45 | 🇻🇪 3:45 PM</span>
+                                <span>🇦🇷 4:45 PM | 🇪🇸 8:45 PM</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="schedule-item">
-                    <div class="schedule-match">Atlético de Madrid vs FC Barcelona</div>
-                    <div class="schedule-time-group">
-                        <span class="date-badge">12 FEB</span>
-                        <div class="time-list">
-                            <span>🇲🇽 2:00 | 🇨🇴 3:00 | 🇻🇪 4:00 PM</span>
-                            <span>🇦🇷 5:00 PM | 🇪🇸 9:00 PM</span>
+                    <div class="schedule-item">
+                        <div class="schedule-match">Athletic Club vs Real Sociedad</div>
+                        <div class="schedule-time-group">
+                            <span class="date-badge">11 FEB</span>
+                            <div class="time-list">
+                                <span>🇲🇽 2:00 | 🇨🇴 3:00 | 🇻🇪 4:00 PM</span>
+                                <span>🇦🇷 5:00 PM | 🇪🇸 9:00 PM</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Hispanoamerica Zone Reference -->
-                <div class="hispano-zones">
-                    <p>🕒 Referencia Zonas:</p>
-                    <div class="zone-grid">
-                        <span>🇲🇽 CDMX (-1h)</span>
-                        <span>🇨🇴 COL (Ref)</span>
-                        <span>🇻🇪 VEN (+1h)</span>
-                        <span>🇪🇸 BCN/MAD (+6h)</span>
+                    <div class="schedule-item">
+                        <div class="schedule-match">Atlético de Madrid vs FC Barcelona</div>
+                        <div class="schedule-time-group">
+                            <span class="date-badge">12 FEB</span>
+                            <div class="time-list">
+                                <span>🇲🇽 2:00 | 🇨🇴 3:00 | 🇻🇪 4:00 PM</span>
+                                <span>🇦🇷 5:00 PM | 🇪🇸 9:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hispano-zones">
+                        <p>🕒 Referencia Zonas:</p>
+                        <div class="zone-grid">
+                            <span>🇲🇽 CDMX (-1h)</span>
+                            <span>🇨🇴 COL (Ref)</span>
+                            <span>🇻🇪 VEN (+1h)</span>
+                            <span>🇪🇸 BCN/MAD (+6h)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,13 +292,9 @@
             <div class="grid-3">
                 <!-- Ep 1 -->
                 <article class="episode-card">
-                    <div class="card-thumb video-container"
-                        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;"
-                            src="https://www.youtube.com/embed/eY9noTCZfOk" title="Real Madrid vs Rayo Vallecano"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="card-thumb video-facade" data-id="eY9noTCZfOk">
+                        <img src="https://img.youtube.com/vi/eY9noTCZfOk/maxresdefault.jpg" alt="Video Thumbnail">
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
                     </div>
                     <div class="card-body">
                         <span class="category-pill">LA LIGA</span>
@@ -300,13 +305,9 @@
 
                 <!-- Ep 2 -->
                 <article class="episode-card">
-                    <div class="card-thumb video-container"
-                        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;"
-                            src="https://www.youtube.com/embed/HurVoT7L1I8" title="Barcelona vs Albacete"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="card-thumb video-facade" data-id="HurVoT7L1I8">
+                        <img src="https://img.youtube.com/vi/HurVoT7L1I8/maxresdefault.jpg" alt="Video Thumbnail">
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
                     </div>
                     <div class="card-body">
                         <span class="category-pill">COPA DEL REY</span>
@@ -317,13 +318,9 @@
 
                 <!-- Ep 3 -->
                 <article class="episode-card">
-                    <div class="card-thumb video-container"
-                        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;"
-                            src="https://www.youtube.com/embed/EosQ-_Ck8is" title="Man Utd vs Tottenham"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="card-thumb video-facade" data-id="EosQ-_Ck8is">
+                        <img src="https://img.youtube.com/vi/EosQ-_Ck8is/maxresdefault.jpg" alt="Video Thumbnail">
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
                     </div>
                     <div class="card-body">
                         <span class="category-pill">PREMIER</span>

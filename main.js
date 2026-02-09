@@ -126,5 +126,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
+    // --- UX Updates: Tabs & Video Facades ---
+
+    // 1. Mobile Match Tabs Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const matchCols = document.querySelectorAll('.match-col');
+
+    if (tabBtns.length > 0) {
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and cols
+                tabBtns.forEach(b => b.classList.remove('active'));
+                matchCols.forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked button
+                btn.classList.add('active');
+
+                // Show corresponding content
+                const tabId = btn.getAttribute('data-tab');
+                const targetCol = document.getElementById(tabId);
+                if (targetCol) {
+                    targetCol.classList.add('active');
+                }
+            });
+        });
+    }
+
+    // 2. Lite YouTube Facade Logic
+    const videoFacades = document.querySelectorAll('.video-facade');
+
+    videoFacades.forEach(facade => {
+        facade.addEventListener('click', function () {
+            if (this.querySelector('iframe')) return; // Already loaded
+
+            const videoId = this.getAttribute('data-id');
+            const iframe = document.createElement('iframe');
+
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.title = 'YouTube video player';
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+
+            // Style iframe to fill container
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+
+            this.appendChild(iframe);
+            const playOverlay = this.querySelector('.play-overlay');
+            if (playOverlay) playOverlay.style.display = 'none';
+        });
+    });
+
     console.log('Hablando de Futbol - Official Colors Loaded');
 });
