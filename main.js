@@ -279,6 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    loadFootballSchedule();
+
     // 5. Cargar Titulares RSS completos (Ticker + Sección de abajo)
     const loadNewsTicker = async () => {
         const tickerContainer = document.getElementById('news-ticker');
