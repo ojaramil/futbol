@@ -181,45 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const footballQueries = [
-        { type: 'comp', id: 'PD', name: '🇪🇸 La Liga Española' },
-        { type: 'comp', id: 'CL', name: '🏆 Champions League' },
-        { type: 'comp', id: 'CLI', name: '🌎 Copa Libertadores' },
-        { type: 'comp', id: 'BL1', name: '🇩🇪 Bundesliga' },
-        { type: 'comp', id: 'FL1', name: '🇫🇷 Ligue 1' },
-        { type: 'comp', id: 'SA', name: '🇮🇹 Serie A' },
-        { type: 'team', id: '81', name: '🔵🔴 FC Barcelona' },
-        { type: 'team', id: '86', name: '⚪ Real Madrid' },
-        { type: 'team', id: '186', name: '🟡🔵 Boca Juniors' },
-        { type: 'team', id: '190', name: '⚪🔴 River Plate' }
-    ];
-
-    // 3. Obtener resultados de fútbol (Vía Vercel Serverless Function)
+    // 3. Obtener resultados de fútbol (Vía Vercel Serverless Function Bulk)
     const loadFootballResults = async () => {
         const resultsContainer = document.getElementById('results-container');
         if (!resultsContainer) return;
 
-        resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Cargando resultados...</span></div>';
+        resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Cargando resultados globales...</span></div>';
 
         try {
+            const response = await fetch('/api/football?status=FINISHED');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json(); // Array de categorías
+
             resultsContainer.innerHTML = '';
 
-            for (const q of footballQueries) {
-                // Título de la sección
-                resultsContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${q.name}</h4>`;
+            data.forEach(category => {
+                resultsContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${category.name}</h4>`;
 
-                // Pedimos 2 resultados (limit=2)
-                const urlParams = q.type === 'team' ? `team=${q.id}` : `comp=${q.id}`;
-                const response = await fetch(`/api/football?${urlParams}&limit=2`);
-
-                if (!response.ok) {
-                    continue;
-                }
-
-                const data = await response.json();
-
-                if (data && data.matches && data.matches.length > 0) {
-                    data.matches.forEach(match => {
+                if (category.matches && category.matches.length > 0) {
+                    category.matches.forEach(match => {
                         const homePens = match.score.penalties?.home;
                         const awayPens = match.score.penalties?.away;
 
@@ -227,65 +207,50 @@ document.addEventListener('DOMContentLoaded', () => {
                             ? `${match.score.regularTime?.home ?? 0}(${homePens}) - ${match.score.regularTime?.away ?? 0}(${awayPens})`
                             : `${match.score.fullTime?.home ?? '-'} - ${match.score.fullTime?.away ?? '-'}`;
 
-                        // Evitar que nombres sean muy largos
                         const homeName = match.homeTeam.shortName || match.homeTeam.name;
                         const awayName = match.awayTeam.shortName || match.awayTeam.name;
 
-                        const matchHtml = `
+                        resultsContainer.innerHTML += `
                             <div class="score-card">
                                 <span class="match-teams">${homeName} vs ${awayName}</span>
                                 <span class="match-score">${scoreText}</span>
                             </div>
                         `;
-                        resultsContainer.innerHTML += matchHtml;
                     });
                 } else {
-                    resultsContainer.innerHTML += '<div class="score-card"><span class="match-teams" style="color: #666; font-size: 0.9em;">Sin resultados recientes disponibles</span></div>';
+                    resultsContainer.innerHTML += '<div class="score-card"><span class="match-teams" style="color: #666; font-size: 0.9em;">Sin partidos en los últimos 10 días</span></div>';
                 }
-            }
+            });
 
         } catch (error) {
-            console.error('Error cargando resultados de futbol:', error);
-            resultsContainer.innerHTML = `
-                <div class="score-card">
-                    <span class="match-teams">Error cargando marcadores temporales</span>
-                    <span class="match-score">-</span>
-                </div>
-            `;
+            console.error('Error cargando resultados globales:', error);
+            resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Error al cargar marcadores</span><span class="match-score">-</span></div>';
         }
     };
 
     // Llamamos la función al final
     loadFootballResults();
 
-    // 4. Obtener la agenda de los próximos partidos
+    // 4. Obtener la agenda de los próximos partidos (Bulk)
     const loadFootballSchedule = async () => {
         const scheduleContainer = document.getElementById('schedule-container');
         if (!scheduleContainer) return;
 
-        scheduleContainer.innerHTML = '<div class="schedule-item"><div class="schedule-match">Cargando agenda...</div></div>';
+        scheduleContainer.innerHTML = '<div class="schedule-item"><div class="schedule-match">Cargando agenda global...</div></div>';
 
         try {
+            const response = await fetch('/api/football?status=SCHEDULED');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+
             scheduleContainer.innerHTML = '';
 
-            for (const q of footballQueries) {
-                // Pedimos 2 resultados programados
-                const urlParams = q.type === 'team' ? `team=${q.id}` : `comp=${q.id}`;
-                const response = await fetch(`/api/football?${urlParams}&status=SCHEDULED&limit=2`);
+            data.forEach(category => {
+                scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${category.name}</h4>`;
 
-                if (!response.ok) {
-                    continue;
-                }
-
-                const data = await response.json();
-
-                if (data && data.matches && data.matches.length > 0) {
-                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${q.name}</h4>`;
-
-                    data.matches.forEach(match => {
+                if (category.matches && category.matches.length > 0) {
+                    category.matches.forEach(match => {
                         const dateObj = new Date(match.utcDate);
-
-                        // Obtenemos la fecha y hora en la zona horaria del usuario (navegador)
                         const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
                         const localDate = dateObj.toLocaleDateString('es-ES', options).toUpperCase();
 
@@ -302,10 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         `;
                     });
                 } else {
-                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${q.name}</h4>`;
-                    scheduleContainer.innerHTML += '<div class="schedule-item"><div class="schedule-match" style="color: #666; font-size: 0.9em;">Sin partidos programados pronto</div></div>';
+                    scheduleContainer.innerHTML += '<div class="schedule-item"><div class="schedule-match" style="color: #666; font-size: 0.9em;">Sin partidos en los próximos 10 días</div></div>';
                 }
-            }
+            });
 
         } catch (error) {
             console.error('Error cargando la agenda:', error);
