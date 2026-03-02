@@ -277,34 +277,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 5. Cargar Titulares RSS en el Ticker (Vía Vercel Bulk)
+    // 5. Cargar Titulares RSS completos (Ticker + Sección de abajo)
     const loadNewsTicker = async () => {
         const tickerContainer = document.getElementById('news-ticker');
-        if (!tickerContainer) return;
+        const newsContainer = document.getElementById('sports-news-container');
 
         try {
             const response = await fetch('/api/news');
             if (response.ok) {
                 const data = await response.json();
 
-                if (data.headlines && data.headlines.length > 0) {
-                    tickerContainer.innerHTML = '';
-                    // Convertir los titulares en items de la cinta
-                    data.headlines.forEach(headline => {
-                        tickerContainer.innerHTML += `<div class="ticker-item">⚽ ${headline}</div>`;
-                    });
+                if (data.articles && data.articles.length > 0) {
 
-                    // Aseguramos que se reinicie la cinta añadiendo uno genérico al final
-                    tickerContainer.innerHTML += `<div class="ticker-item">Sigue la programación habitual en Signal Radio</div>`;
+                    // Actualizar Ticker Superior
+                    if (tickerContainer) {
+                        tickerContainer.innerHTML = '';
+                        // Solo tomamos los titulos para el ticker
+                        data.articles.forEach(article => {
+                            tickerContainer.innerHTML += `<div class="ticker-item">⚽ ${article.title}</div>`;
+                        });
+                        tickerContainer.innerHTML += `<div class="ticker-item">Sigue la programación habitual en Signal Radio</div>`;
+                    }
+
+                    // Actualizar Sección Inferior (Solo si existe)
+                    if (newsContainer) {
+                        newsContainer.innerHTML = '';
+                        // Mostramos solo los primeros 3 para no romper el diseño en la web
+                        data.articles.slice(0, 3).forEach((article, index) => {
+                            const formattedNum = (index + 1).toString().padStart(2, '0');
+                            newsContainer.innerHTML += `
+                                <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="news-item">
+                                    <span class="news-num">${formattedNum}</span>
+                                    <div class="news-content">
+                                        <h4>${article.title}</h4>
+                                        <p>${article.desc}</p>
+                                    </div>
+                                    <i class="fas fa-external-link-alt arrow" style="font-size: 0.8rem;"></i>
+                                </a>
+                            `;
+                        });
+                    }
                 }
             }
         } catch (error) {
             console.error('Error cargando noticias RSS:', error);
-            // Si falla, dejamos el texto genérico
-            tickerContainer.innerHTML = `
-                <div class="ticker-item">⚽ Consulta los marcadores tras la última jornada.</div>
-                <div class="ticker-item">Sigue la programación habitual en Signal Radio.</div>
-            `;
+            if (tickerContainer) {
+                tickerContainer.innerHTML = `
+                    <div class="ticker-item">⚽ Consulta los marcadores tras la última jornada.</div>
+                    <div class="ticker-item">Sigue la programación habitual en Signal Radio.</div>
+                `;
+            }
+            if (newsContainer) {
+                newsContainer.innerHTML = `
+                    <a href="#" class="news-item">
+                        <span class="news-num">!</span>
+                        <div class="news-content">
+                            <h4>Error temporal de conexión</h4>
+                            <p>No se han podido actualizar las noticias en este momento.</p>
+                        </div>
+                    </a>
+                `;
+            }
         }
     };
 
