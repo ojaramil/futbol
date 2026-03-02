@@ -277,7 +277,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    loadFootballSchedule();
+    // 5. Cargar Titulares RSS en el Ticker (Vía Vercel Bulk)
+    const loadNewsTicker = async () => {
+        const tickerContainer = document.getElementById('news-ticker');
+        if (!tickerContainer) return;
+
+        try {
+            const response = await fetch('/api/news');
+            if (response.ok) {
+                const data = await response.json();
+
+                if (data.headlines && data.headlines.length > 0) {
+                    tickerContainer.innerHTML = '';
+                    // Convertir los titulares en items de la cinta
+                    data.headlines.forEach(headline => {
+                        tickerContainer.innerHTML += `<div class="ticker-item">⚽ ${headline}</div>`;
+                    });
+
+                    // Aseguramos que se reinicie la cinta añadiendo uno genérico al final
+                    tickerContainer.innerHTML += `<div class="ticker-item">Sigue la programación habitual en Signal Radio</div>`;
+                }
+            }
+        } catch (error) {
+            console.error('Error cargando noticias RSS:', error);
+            // Si falla, dejamos el texto genérico
+            tickerContainer.innerHTML = `
+                <div class="ticker-item">⚽ Consulta los marcadores tras la última jornada.</div>
+                <div class="ticker-item">Sigue la programación habitual en Signal Radio.</div>
+            `;
+        }
+    };
+
+    loadNewsTicker();
 
     console.log('Hablando de Futbol - Official Colors Loaded');
 });
