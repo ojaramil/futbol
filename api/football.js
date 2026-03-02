@@ -17,8 +17,11 @@ export default async function handler(req, res) {
     const fromStr = fromDate.toISOString().split('T')[0];
     const toStr = toDate.toISOString().split('T')[0];
 
+    // Los partidos futuros pueden estar "SCHEDULED" (sin hora) o "TIMED" (con hora confirmada)
+    const apiStatus = status === 'SCHEDULED' ? 'SCHEDULED,TIMED' : status;
+
     // Llamamos a un único endpoint global que trae todo lo que sucedió en esos 10 días
-    const url = `https://api.football-data.org/v4/matches?dateFrom=${fromStr}&dateTo=${toStr}&status=${status}`;
+    const url = `https://api.football-data.org/v4/matches?dateFrom=${fromStr}&dateTo=${toStr}&status=${apiStatus}`;
 
     try {
         const response = await fetch(url, {
