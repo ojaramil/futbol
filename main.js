@@ -250,5 +250,67 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamamos la función al final
     loadFootballResults();
 
+    // 4. Obtener la agenda de los próximos partidos
+    const loadFootballSchedule = async () => {
+        const scheduleContainer = document.getElementById('schedule-container');
+        if (!scheduleContainer) return;
+
+        scheduleContainer.innerHTML = '<div class="schedule-item"><div class="schedule-match">Cargando agenda...</div></div>';
+
+        const competitions = [
+            { id: 'CL', name: '🏆 Champions League' },
+            { id: 'CLI', name: '🌎 Copa Libertadores' },
+            { id: 'PD', name: '🇪🇸 La Liga Española' }
+        ];
+
+        try {
+            scheduleContainer.innerHTML = '';
+
+            for (const comp of competitions) {
+                // Pedimos 3 resultados por cada torneo, ahora usamos status=SCHEDULED
+                const response = await fetch(`/api/football?comp=${comp.id}&status=SCHEDULED&limit=3`);
+
+                if (!response.ok) {
+                    continue;
+                }
+
+                const data = await response.json();
+
+                if (data && data.matches && data.matches.length > 0) {
+                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${comp.name}</h4>`;
+
+                    data.matches.forEach(match => {
+                        const dateObj = new Date(match.utcDate);
+
+                        // Obtenemos la fecha y hora en la zona horaria del usuario (navegador)
+                        const options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                        const localDate = dateObj.toLocaleDateString('es-ES', options).toUpperCase();
+
+                        const homeName = match.homeTeam.shortName || match.homeTeam.name;
+                        const awayName = match.awayTeam.shortName || match.awayTeam.name;
+
+                        scheduleContainer.innerHTML += `
+                            <div class="schedule-item" style="padding: 10px 15px; margin-bottom: 10px; border-bottom: 1px solid #efefef; background: white; border-radius: 4px;">
+                                <div class="schedule-match" style="font-family: var(--font-display); font-size: 1.1rem; color: var(--navy-dark);">${homeName} vs ${awayName}</div>
+                                <div class="schedule-time-group" style="margin-top: 5px;">
+                                    <span class="date-badge" style="background: var(--navy-dark); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; border-left: 3px solid var(--sky-blue);">${localDate} (Local)</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${comp.name}</h4>`;
+                    scheduleContainer.innerHTML += '<div class="schedule-item"><div class="schedule-match" style="color: #666; font-size: 0.9em;">Sin partidos programados pronto</div></div>';
+                }
+            }
+
+        } catch (error) {
+            console.error('Error cargando la agenda:', error);
+            scheduleContainer.innerHTML = '<div class="schedule-item"><div class="schedule-match" style="color: red;">Error al cargar la agenda</div></div>';
+        }
+    };
+
+    loadFootballSchedule();
+
     console.log('Hablando de Futbol - Official Colors Loaded');
 });
