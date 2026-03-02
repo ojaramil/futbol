@@ -189,7 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Cargando resultados globales...</span></div>';
 
         try {
-            const response = await fetch('/api/football?status=FINISHED');
+            // Añadimos cache=2 para evitar el caché erróneo anterior de Vercel
+            const response = await fetch('/api/football?status=FINISHED&cache=2');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json(); // Array de categorías
 
@@ -239,7 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scheduleContainer.innerHTML = '<div class="schedule-item"><div class="schedule-match">Cargando agenda global...</div></div>';
 
         try {
-            const response = await fetch('/api/football?status=SCHEDULED');
+            // Añadimos cache=2 para forzar los nuevos query params con TIMED
+            const response = await fetch('/api/football?status=SCHEDULED&cache=3');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
 
