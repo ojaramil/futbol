@@ -181,5 +181,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 3. Obtener resultados de fútbol (Vía Vercel Serverless Function)
+    const loadFootballResults = async () => {
+        const resultsContainer = document.getElementById('results-container');
+        if (!resultsContainer) return;
+
+        try {
+            // Llamamos a nuestro propio servidor (Vercel) para proteger la clave
+            const response = await fetch('/api/football');
+
+            if (!response.ok) {
+                throw new Error('No se pudo obtener la información de los partidos');
+            }
+
+            const data = await response.json();
+
+            // Verificamos si hay partidos en la respuesta
+            if (data && data.matches && data.matches.length > 0) {
+                // Limpiamos el texto de "Cargando..."
+                resultsContainer.innerHTML = '';
+
+                // Recorremos los partidos y generamos el HTML de cada tarjeta
+                data.matches.forEach(match => {
+                    // Verificamos si hubo penales
+                    const homePens = match.score.penalties?.home;
+                    const awayPens = match.score.penalties?.away;
+
+                    const scoreText = (homePens !== undefined && awayPens !== undefined)
+                        ? `${match.score.regularTime.home}(${homePens}) - ${match.score.regularTime.away}(${awayPens})`
+                        : `${match.score.fullTime.home} - ${match.score.fullTime.away}`;
+
+                    const matchHtml = `
+                        <div class="score-card">
+                            <span class="match-teams">${match.homeTeam.shortName || match.homeTeam.name} vs ${match.awayTeam.shortName || match.awayTeam.name}</span>
+                            <span class="match-score">${scoreText}</span>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML += matchHtml;
+                });
+            } else {
+                resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">No hay partidos recientes</span></div>';
+            }
+
+        } catch (error) {
+            console.error('Error cargando resultados de futbol:', error);
+            resultsContainer.innerHTML = `
+                <div class="score-card">
+                    <span class="match-teams">Error cargando marcadores temporales</span>
+                    <span class="match-score">-</span>
+                </div>
+            `;
+        }
+    };
+
+    // Llamamos la función al final
+    loadFootballResults();
+
     console.log('Hablando de Futbol - Official Colors Loaded');
 });
