@@ -186,41 +186,54 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultsContainer = document.getElementById('results-container');
         if (!resultsContainer) return;
 
+        resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Cargando ligas...</span></div>';
+
+        const competitions = [
+            { id: 'CL', name: '🏆 Champions League' },
+            { id: 'CLI', name: '🌎 Copa Libertadores' },
+            { id: 'PD', name: '🇪🇸 La Liga Española' }
+        ];
+
         try {
-            // Llamamos a nuestro propio servidor (Vercel) para proteger la clave
-            const response = await fetch('/api/football');
+            resultsContainer.innerHTML = '';
 
-            if (!response.ok) {
-                throw new Error('No se pudo obtener la información de los partidos');
-            }
+            for (const comp of competitions) {
+                // Título de la competición
+                resultsContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${comp.name}</h4>`;
 
-            const data = await response.json();
+                // Pedimos 3 resultados por cada torneo
+                const response = await fetch(`/api/football?comp=${comp.id}&limit=3`);
 
-            // Verificamos si hay partidos en la respuesta
-            if (data && data.matches && data.matches.length > 0) {
-                // Limpiamos el texto de "Cargando..."
-                resultsContainer.innerHTML = '';
+                if (!response.ok) {
+                    continue;
+                }
 
-                // Recorremos los partidos y generamos el HTML de cada tarjeta
-                data.matches.forEach(match => {
-                    // Verificamos si hubo penales
-                    const homePens = match.score.penalties?.home;
-                    const awayPens = match.score.penalties?.away;
+                const data = await response.json();
 
-                    const scoreText = (homePens !== undefined && awayPens !== undefined)
-                        ? `${match.score.regularTime.home}(${homePens}) - ${match.score.regularTime.away}(${awayPens})`
-                        : `${match.score.fullTime.home} - ${match.score.fullTime.away}`;
+                if (data && data.matches && data.matches.length > 0) {
+                    data.matches.forEach(match => {
+                        const homePens = match.score.penalties?.home;
+                        const awayPens = match.score.penalties?.away;
 
-                    const matchHtml = `
-                        <div class="score-card">
-                            <span class="match-teams">${match.homeTeam.shortName || match.homeTeam.name} vs ${match.awayTeam.shortName || match.awayTeam.name}</span>
-                            <span class="match-score">${scoreText}</span>
-                        </div>
-                    `;
-                    resultsContainer.innerHTML += matchHtml;
-                });
-            } else {
-                resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">No hay partidos recientes</span></div>';
+                        const scoreText = (homePens !== undefined && awayPens !== undefined)
+                            ? `${match.score.regularTime?.home ?? 0}(${homePens}) - ${match.score.regularTime?.away ?? 0}(${awayPens})`
+                            : `${match.score.fullTime?.home ?? '-'} - ${match.score.fullTime?.away ?? '-'}`;
+
+                        // Evitar que nombres sean muy largos
+                        const homeName = match.homeTeam.shortName || match.homeTeam.name;
+                        const awayName = match.awayTeam.shortName || match.awayTeam.name;
+
+                        const matchHtml = `
+                            <div class="score-card">
+                                <span class="match-teams">${homeName} vs ${awayName}</span>
+                                <span class="match-score">${scoreText}</span>
+                            </div>
+                        `;
+                        resultsContainer.innerHTML += matchHtml;
+                    });
+                } else {
+                    resultsContainer.innerHTML += '<div class="score-card"><span class="match-teams" style="color: #666; font-size: 0.9em;">Sin resultados recientes disponibles</span></div>';
+                }
             }
 
         } catch (error) {

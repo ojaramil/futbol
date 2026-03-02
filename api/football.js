@@ -1,10 +1,18 @@
 export default async function handler(req, res) {
-    // Escogemos la competición que quieras. PD = Primera División (La Liga), CL = Champions League
-    const url = 'https://api.football-data.org/v4/competitions/PD/matches?status=FINISHED&limit=8';
+    // Obtenemos la competición y el límite de los query params, o usamos valores por defecto
+    const comp = req.query.comp || 'CL';
+    const limit = req.query.limit || '4';
+
+    // Lista de competiciones permitidas para evitar abusos (Free tier soporta estas)
+    // CL: Champions, CLI: Libertadores, PD: Primera División (España)
+    const allowedComps = ['CL', 'CLI', 'PD'];
+    const safeComp = allowedComps.includes(comp) ? comp : 'CL';
+
+    const url = `https://api.football-data.org/v4/competitions/${safeComp}/matches?status=FINISHED&limit=${limit}`;
 
     try {
         // Hacemos la petición a la API oficial desde el servidor de Vercel
-        // Usamos process.env.FOOTBALL_API_TOKEN que estará en Vercel, no en el código origin
+        // Usamos process.env.FOOTBALL_API_TOKEN que estará en Vercel, no en el código fuente
         const response = await fetch(url, {
             headers: {
                 'X-Auth-Token': process.env.FOOTBALL_API_TOKEN
