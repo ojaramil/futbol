@@ -1,19 +1,24 @@
 export default async function handler(req, res) {
-    // Obtenemos la competición y el límite de los query params, o usamos valores por defecto
-    const comp = req.query.comp || 'CL';
-    const limit = req.query.limit || '4';
+    const comp = req.query.comp;
+    const team = req.query.team;
+    const limit = req.query.limit || '2';
     const status = req.query.status || 'FINISHED';
 
-    // Lista de competiciones permitidas para evitar abusos (Free tier soporta estas)
-    // CL: Champions, CLI: Libertadores, PD: Primera División (España)
-    const allowedComps = ['CL', 'CLI', 'PD'];
-    const safeComp = allowedComps.includes(comp) ? comp : 'CL';
+    let url = '';
 
-    const url = `https://api.football-data.org/v4/competitions/${safeComp}/matches?status=${status}&limit=${limit}`;
+    if (team) {
+        // Equipos permitidos: 81 (Barcelona), 86 (Real Madrid), 186 (Boca Juniors), 190 (River Plate)
+        const allowedTeams = ['81', '86', '186', '190'];
+        const safeTeam = allowedTeams.includes(team) ? team : '86';
+        url = `https://api.football-data.org/v4/teams/${safeTeam}/matches?status=${status}&limit=${limit}`;
+    } else {
+        // Competiciones: CL, CLI, PD, BL1 (Bundesliga), FL1 (Ligue 1), SA (Serie A)
+        const allowedComps = ['CL', 'CLI', 'PD', 'BL1', 'FL1', 'SA'];
+        const safeComp = allowedComps.includes(comp) ? comp : 'CL';
+        url = `https://api.football-data.org/v4/competitions/${safeComp}/matches?status=${status}&limit=${limit}`;
+    }
 
     try {
-        // Hacemos la petición a la API oficial desde el servidor de Vercel
-        // Usamos process.env.FOOTBALL_API_TOKEN que estará en Vercel, no en el código fuente
         const response = await fetch(url, {
             headers: {
                 'X-Auth-Token': process.env.FOOTBALL_API_TOKEN
@@ -25,8 +30,6 @@ export default async function handler(req, res) {
         }
 
         const data = await response.json();
-
-        // Devolvemos la data al cliente (tu página web)
         res.status(200).json(data);
     } catch (error) {
         console.error('Error obteniendo resultados:', error);

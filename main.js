@@ -181,28 +181,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const footballQueries = [
+        { type: 'comp', id: 'PD', name: '🇪🇸 La Liga Española' },
+        { type: 'comp', id: 'CL', name: '🏆 Champions League' },
+        { type: 'comp', id: 'CLI', name: '🌎 Copa Libertadores' },
+        { type: 'comp', id: 'BL1', name: '🇩🇪 Bundesliga' },
+        { type: 'comp', id: 'FL1', name: '🇫🇷 Ligue 1' },
+        { type: 'comp', id: 'SA', name: '🇮🇹 Serie A' },
+        { type: 'team', id: '81', name: '🔵🔴 FC Barcelona' },
+        { type: 'team', id: '86', name: '⚪ Real Madrid' },
+        { type: 'team', id: '186', name: '🟡🔵 Boca Juniors' },
+        { type: 'team', id: '190', name: '⚪🔴 River Plate' }
+    ];
+
     // 3. Obtener resultados de fútbol (Vía Vercel Serverless Function)
     const loadFootballResults = async () => {
         const resultsContainer = document.getElementById('results-container');
         if (!resultsContainer) return;
 
-        resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Cargando ligas...</span></div>';
-
-        const competitions = [
-            { id: 'CL', name: '🏆 Champions League' },
-            { id: 'CLI', name: '🌎 Copa Libertadores' },
-            { id: 'PD', name: '🇪🇸 La Liga Española' }
-        ];
+        resultsContainer.innerHTML = '<div class="score-card"><span class="match-teams">Cargando resultados...</span></div>';
 
         try {
             resultsContainer.innerHTML = '';
 
-            for (const comp of competitions) {
-                // Título de la competición
-                resultsContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${comp.name}</h4>`;
+            for (const q of footballQueries) {
+                // Título de la sección
+                resultsContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${q.name}</h4>`;
 
-                // Pedimos 3 resultados por cada torneo
-                const response = await fetch(`/api/football?comp=${comp.id}&limit=3`);
+                // Pedimos 2 resultados (limit=2)
+                const urlParams = q.type === 'team' ? `team=${q.id}` : `comp=${q.id}`;
+                const response = await fetch(`/api/football?${urlParams}&limit=2`);
 
                 if (!response.ok) {
                     continue;
@@ -257,18 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         scheduleContainer.innerHTML = '<div class="schedule-item"><div class="schedule-match">Cargando agenda...</div></div>';
 
-        const competitions = [
-            { id: 'CL', name: '🏆 Champions League' },
-            { id: 'CLI', name: '🌎 Copa Libertadores' },
-            { id: 'PD', name: '🇪🇸 La Liga Española' }
-        ];
-
         try {
             scheduleContainer.innerHTML = '';
 
-            for (const comp of competitions) {
-                // Pedimos 3 resultados por cada torneo, ahora usamos status=SCHEDULED
-                const response = await fetch(`/api/football?comp=${comp.id}&status=SCHEDULED&limit=3`);
+            for (const q of footballQueries) {
+                // Pedimos 2 resultados programados
+                const urlParams = q.type === 'team' ? `team=${q.id}` : `comp=${q.id}`;
+                const response = await fetch(`/api/football?${urlParams}&status=SCHEDULED&limit=2`);
 
                 if (!response.ok) {
                     continue;
@@ -277,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (data && data.matches && data.matches.length > 0) {
-                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${comp.name}</h4>`;
+                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${q.name}</h4>`;
 
                     data.matches.forEach(match => {
                         const dateObj = new Date(match.utcDate);
@@ -299,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         `;
                     });
                 } else {
-                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${comp.name}</h4>`;
+                    scheduleContainer.innerHTML += `<h4 style="margin: 20px 0 10px; color: var(--navy-dark); font-family: var(--font-display); font-size: 1.1rem; border-bottom: 2px solid var(--sky-blue); padding-bottom: 5px;">${q.name}</h4>`;
                     scheduleContainer.innerHTML += '<div class="schedule-item"><div class="schedule-match" style="color: #666; font-size: 0.9em;">Sin partidos programados pronto</div></div>';
                 }
             }
